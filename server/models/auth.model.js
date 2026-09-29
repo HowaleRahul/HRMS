@@ -75,7 +75,7 @@ export const findByResetToken = async (token) => {
 
 export const updatePassword = async (userId, hashedPassword) => {
   await pool.execute(
-    'UPDATE users SET password = ?, reset_token = NULL, reset_token_expires = NULL WHERE id = ?',
+    'UPDATE users SET password_hash = ?, reset_token = NULL, reset_token_expires = NULL WHERE id = ?',
     [hashedPassword, userId]
   );
 };

@@ -224,7 +224,7 @@ export const changePassword = async (req, res) => {
       return errorResponse(res, 'User not found', 404);
     }
 
-    const isMatch = await bcrypt.compare(currentPassword, user.password);
+    const isMatch = await bcrypt.compare(currentPassword, user.password_hash);
     if (!isMatch) {
       return errorResponse(res, 'Incorrect current password', 400);
     }

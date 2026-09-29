@@ -107,6 +107,9 @@ export const generatePayslipPDF = async (req, res) => {
       designation_name: payroll.designation_name
     };
 
+    const allowSum = parseFloat(payroll.hra || 0) + parseFloat(payroll.da || 0) + parseFloat(payroll.other_allowances || 0);
+    const dedSum = parseFloat(payroll.pf || 0) + parseFloat(payroll.esi || 0) + parseFloat(payroll.tax || 0) + parseFloat(payroll.other_deductions || 0);
+
     const payrollData = {
       month: payroll.month,
       year: payroll.year,
@@ -120,7 +123,7 @@ export const generatePayslipPDF = async (req, res) => {
     
     res.set({
       'Content-Type': 'application/pdf',
-      'Content-Disposition': `attachment; filename=payslip_\${payroll.month}_\${payroll.year}.pdf`
+      'Content-Disposition': 'attachment; filename=payslip_' + payroll.month + '_' + payroll.year + '.pdf'
     });
     return res.send(pdfBuffer);
   } catch (error) {
