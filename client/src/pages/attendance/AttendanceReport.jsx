@@ -29,8 +29,8 @@ const AttendanceReport = () => {
   const fetchEmployees = async () => {
     try {
       const res = await employeeAPI.getAll({ limit: 1000 });
-      setEmployees(res.data?.data?.employees || []);
-      if (res.data?.data?.employees?.length > 0) {
+      setEmployees(res.data?.data || []);
+      if (res.data?.data?.length > 0) {
         setSelectedEmployee(res.data.data.employees[0].id);
       }
     } catch (error) {

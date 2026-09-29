@@ -24,7 +24,7 @@ const LeaveBalance = () => {
   const fetchEmployees = async () => {
     try {
       const res = await employeeAPI.getAll({ limit: 1000 });
-      setEmployees(res.data?.data?.employees || []);
+      setEmployees(res.data?.data || []);
     } catch (error) {
       console.error('Failed to fetch employees');
     }

@@ -16,7 +16,7 @@
   height: 76px;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 16px;
   padding: 0 16px;
   border-right: 1px solid #E4E7EC;

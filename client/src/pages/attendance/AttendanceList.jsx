@@ -53,7 +53,7 @@ const AttendanceList = () => {
     setIsModalOpen(true);
     try {
       const res = await employeeAPI.getAll({ limit: 1000 });
-      setEmployees(res.data?.data?.employees || []);
+      setEmployees(res.data?.data || []);
     } catch (error) {
       toast.error('Failed to load employees');
     }

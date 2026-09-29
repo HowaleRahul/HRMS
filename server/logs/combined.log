@@ -142,3 +142,24 @@
 2026-09-28 14:28:18 [INFO]: Database connected successfully
 2026-09-28 14:28:53 [INFO]: Server running on port 5000
 2026-09-28 14:28:53 [INFO]: Database connected successfully
+2026-09-29 19:33:09 [INFO]: Server running on port 5000
+2026-09-29 19:33:09 [INFO]: Server running on port 5000
+2026-09-29 19:33:10 [INFO]: Database connected successfully
+2026-09-29 19:33:10 [INFO]: Database connected successfully
+2026-09-29 19:33:32 [INFO]: Server running on port 5000
+2026-09-29 19:33:32 [INFO]: Database connected successfully
+2026-09-29 19:35:30 [INFO]: Server running on port 5000
+2026-09-29 19:35:30 [INFO]: Database connected successfully
+2026-09-29 19:40:33 [ERROR]: SyntaxError: Expected property name or '}' in JSON at position 1 (line 1 column 2)
+    at JSON.parse (<anonymous>)
+    at parse (C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\node_modules\body-parser\lib\types\json.js:91:21)
+    at C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\node_modules\body-parser\lib\read.js:162:18
+    at AsyncResource.runInAsyncScope (node:async_hooks:214:14)
+    at invokeCallback (C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\node_modules\raw-body\index.js:238:16)
+    at done (C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\node_modules\raw-body\index.js:227:7)
+    at IncomingMessage.onEnd (C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\node_modules\raw-body\index.js:287:7)
+    at IncomingMessage.emit (node:events:519:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:90:21)
+2026-09-29 19:46:08 [INFO]: Server running on port 5000
+2026-09-29 19:46:09 [INFO]: Database connected successfully

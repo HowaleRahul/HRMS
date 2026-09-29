@@ -67,12 +67,12 @@ const Dashboard = () => {
       />
       
       <div className={styles.statsGrid}>
-        <StatCard title="Total Employees" value={stats.totalEmployees} icon={Users} color="info" />
-        <StatCard title="Present Today" value={stats.presentToday} icon={UserCheck} color="success" />
-        <StatCard title="Absent Today" value={stats.absentToday} icon={UserX} color="danger" />
-        <StatCard title="On Leave" value={stats.onLeaveToday} icon={CalendarIcon} color="warning" />
-        <StatCard title="Late Today" value={stats.lateToday} icon={Clock} color="warning" />
-        <StatCard title="New Joiners" value={stats.newJoiners} icon={UserPlus} color="primary" />
+        <StatCard title="Total Employees" value={stats.totalEmployees} icon={Users} color="info" onClick={() => navigate('/employees')} />
+        <StatCard title="Present Today" value={stats.presentToday} icon={UserCheck} color="success" onClick={() => navigate('/attendance')} />
+        <StatCard title="Absent Today" value={stats.absentToday} icon={UserX} color="danger" onClick={() => navigate('/attendance')} />
+        <StatCard title="On Leave" value={stats.onLeaveToday} icon={CalendarIcon} color="warning" onClick={() => navigate('/leaves')} />
+        <StatCard title="Late Today" value={stats.lateToday} icon={Clock} color="warning" onClick={() => navigate('/attendance')} />
+        <StatCard title="New Joiners" value={stats.newJoiners} icon={UserPlus} color="primary" onClick={() => navigate('/employees')} />
       </div>
 
       <div className={styles.mainRow}>

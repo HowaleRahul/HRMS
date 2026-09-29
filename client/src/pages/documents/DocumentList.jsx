@@ -49,7 +49,7 @@ export default function DocumentList() {
   const fetchEmployees = async () => {
     try {
       const res = await employeeAPI.getAll();
-      setEmployees(res.data || []);
+      setEmployees(res.data?.data || []);
     } catch (error) {
       console.error('Failed to fetch employees');
     }

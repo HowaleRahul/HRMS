@@ -60,8 +60,8 @@ const EmployeeList = () => {
       };
       // Mocked for now, will connect to API
       const response = await employeeAPI.getAll(params);
-      setEmployees(response.data?.data?.employees || []);
-      setTotalPages(response.data?.data?.totalPages || 1);
+      setEmployees(response.data?.data || []);
+      setTotalPages(response.data?.pagination?.totalPages || 1);
     } catch (error) {
       toast.error('Failed to fetch employees');
       setEmployees([]);

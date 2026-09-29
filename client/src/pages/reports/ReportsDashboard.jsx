@@ -32,7 +32,7 @@ export default function ReportsDashboard() {
     try {
       setLoading(true);
       const res = await reportAPI.get(activeReport, filters);
-      setData(res.data || []);
+      setData(res.data?.data || []);
     } catch (error) {
       toast.error('Failed to fetch report data');
       setData([]);

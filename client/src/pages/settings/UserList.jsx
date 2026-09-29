@@ -42,7 +42,7 @@ export default function UserList() {
       ]);
       setUsers(uRes.data || []);
       setRoles(rRes.data || []);
-      setEmployees(eRes.data || []);
+      setEmployees(eRes.data?.data || []);
     } catch (error) {
       toast.error('Failed to fetch data');
     } finally {

@@ -15,8 +15,9 @@ const ADMIN_NAV_SECTIONS = [
     items: [
       { path: '/employees', label: 'Employees', icon: Users },
       { path: '/departments', label: 'Departments', icon: Building2 },
+      { path: '/designations', label: 'Designations', icon: Building2 },
       { path: '/attendance', label: 'Attendance', icon: Clock },
-      { path: '/leave', label: 'Leaves', icon: Calendar },
+      { path: '/leaves', label: 'Leaves', icon: Calendar },
       { path: '/payroll', label: 'Payroll', icon: Wallet },
     ],
   },
@@ -33,8 +34,9 @@ const ADMIN_NAV_SECTIONS = [
     label: 'System',
     items: [
       { path: '/notices', label: 'Notices', icon: Bell },
+      { path: '/holidays', label: 'Holidays', icon: Calendar },
       { path: '/reports', label: 'Reports', icon: BarChart3 },
-      { path: '/settings', label: 'Settings', icon: Settings },
+      { path: '/settings/users', label: 'Settings', icon: Settings },
     ]
   }
 ];
