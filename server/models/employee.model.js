@@ -1,5 +1,13 @@
 import pool from '../config/db.js';
 
+const employeeCreateFields = new Set([
+  'employee_code', 'first_name', 'last_name', 'email', 'phone', 'alternate_phone', 'date_of_birth',
+  'gender_id', 'blood_group_id', 'marital_status_id', 'nationality', 'photo', 'current_address',
+  'permanent_address', 'department_id', 'designation_id', 'reporting_manager_id', 'employment_type_id',
+  'joining_date', 'confirmation_date', 'resignation_date', 'last_working_date', 'is_active'
+]);
+const employeeUpdateFields = new Set([...employeeCreateFields].filter(field => field !== 'employee_code'));
+
 class EmployeeModel {
   async getAll(filters = {}) {
     const {
@@ -150,9 +158,10 @@ class EmployeeModel {
   }
 
   async create(data) {
-    const fields = Object.keys(data);
+    const entries = Object.entries(data).filter(([field]) => employeeCreateFields.has(field));
+    const fields = entries.map(([field]) => field);
     const placeholders = fields.map(() => '?').join(', ');
-    const values = Object.values(data);
+    const values = entries.map(([, value]) => value);
 
     const query = `INSERT INTO employees (${fields.join(', ')}) VALUES (${placeholders})`;
     const [result] = await pool.execute(query, values);
@@ -160,9 +169,11 @@ class EmployeeModel {
   }
 
   async update(id, data) {
-    const fields = Object.keys(data);
+    const entries = Object.entries(data).filter(([field]) => employeeUpdateFields.has(field));
+    const fields = entries.map(([field]) => field);
+    if (fields.length === 0) return 0;
     const updates = fields.map(field => `${field} = ?`).join(', ');
-    const values = Object.values(data);
+    const values = entries.map(([, value]) => value);
     values.push(id);
 
     const query = `UPDATE employees SET ${updates} WHERE id = ?`;

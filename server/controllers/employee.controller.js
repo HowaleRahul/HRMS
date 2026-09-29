@@ -30,6 +30,16 @@ const createAuditLog = async (userId, action, module, recordId, oldValues, newVa
   }
 };
 
+export const getEmployeeFormOptions = async (req, res) => {
+  try {
+    const [genders] = await pool.execute('SELECT id, name FROM master_gender WHERE is_deleted = 0 ORDER BY id');
+    const [employmentTypes] = await pool.execute('SELECT id, name FROM master_employment_type WHERE is_deleted = 0 ORDER BY id');
+    res.status(200).json({ success: true, data: { genders, employmentTypes } });
+  } catch (error) {
+    res.status(500).json({ success: false, message: 'Server Error' });
+  }
+};
+
 export const getAllEmployees = async (req, res) => {
   try {
     const filters = {

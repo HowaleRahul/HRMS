@@ -40,8 +40,8 @@ export default function UserList() {
         userAPI.getRoles(),
         employeeAPI.getAll()
       ]);
-      setUsers(uRes.data || []);
-      setRoles(rRes.data || []);
+      setUsers(uRes.data?.data || []);
+      setRoles(rRes.data?.data || []);
       setEmployees(eRes.data?.data || []);
     } catch (error) {
       toast.error('Failed to fetch data');

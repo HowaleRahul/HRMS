@@ -2,6 +2,7 @@ import express from 'express';
 import { check } from 'express-validator';
 import {
   getAllEmployees,
+  getEmployeeFormOptions,
   getEmployeeById,
   createEmployee,
   updateEmployee,
@@ -18,6 +19,7 @@ import { uploadSingle } from '../middleware/upload.js';
 const router = express.Router();
 
 router.get('/', authenticate, checkPermission('employees', 'view'), getAllEmployees);
+router.get('/form-options', authenticate, getEmployeeFormOptions);
 
 router.get('/:id', authenticate, checkPermission('employees', 'view'), getEmployeeById);
 

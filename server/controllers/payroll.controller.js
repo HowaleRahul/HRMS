@@ -37,9 +37,11 @@ export const generatePayroll = async (req, res) => {
     if (existing) {
       return errorResponse(res, 'Payroll already exists for this month', 400);
     }
-    const id = await PayrollModel.generate(req.body);
+    const id = await PayrollModel.generate({ ...req.body, generated_by: req.user.id });
     return successResponse(res, { id }, 'Payroll generated successfully', 201);
   } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') return errorResponse(res, 'Payroll already exists for this month', 409);
+    if (error.message.startsWith('Invalid') || error.message.includes('cannot exceed')) return errorResponse(res, error.message, 400);
     return errorResponse(res, 'Internal server error');
   }
 };
@@ -47,10 +49,12 @@ export const generatePayroll = async (req, res) => {
 export const bulkGeneratePayroll = async (req, res) => {
   try {
     const { records } = req.body;
-    if (!records || !records.length) return errorResponse(res, 'No records provided', 400);
-    const ids = await PayrollModel.bulkGenerate(records);
+    if (!Array.isArray(records) || records.length === 0 || records.length > 500) return errorResponse(res, 'Provide between 1 and 500 payroll records', 400);
+    const ids = await PayrollModel.bulkGenerate(records.map(record => ({ ...record, generated_by: req.user.id })));
     return successResponse(res, { ids }, 'Bulk payroll generated successfully', 201);
   } catch (error) {
+    if (error.code === 'ER_DUP_ENTRY') return errorResponse(res, 'Payroll already exists for an employee and month', 409);
+    if (error.message.startsWith('Invalid') || error.message.includes('cannot exceed')) return errorResponse(res, error.message, 400);
     return errorResponse(res, 'Internal server error');
   }
 };
@@ -75,8 +79,8 @@ export const deletePayroll = async (req, res) => {
 
 export const updatePaymentStatus = async (req, res) => {
   try {
-    const { status, payment_date, transaction_ref } = req.body;
-    await PayrollModel.updatePaymentStatus(req.params.id, status, payment_date, transaction_ref);
+    const { status, payment_date, transaction_reference } = req.body;
+    await PayrollModel.updatePaymentStatus(req.params.id, status, payment_date, transaction_reference);
     return successResponse(res, null, 'Payment status updated successfully');
   } catch (error) {
     return errorResponse(res, 'Internal server error');
@@ -107,8 +111,10 @@ export const generatePayslipPDF = async (req, res) => {
       designation_name: payroll.designation_name
     };
 
-    const allowSum = parseFloat(payroll.hra || 0) + parseFloat(payroll.da || 0) + parseFloat(payroll.other_allowances || 0);
-    const dedSum = parseFloat(payroll.pf || 0) + parseFloat(payroll.esi || 0) + parseFloat(payroll.tax || 0) + parseFloat(payroll.other_deductions || 0);
+    const allowSum = ['hra', 'da', 'transport_allowance', 'medical_allowance', 'special_allowance', 'overtime_pay', 'bonus']
+      .reduce((total, field) => total + Number(payroll[field] || 0), 0);
+    const dedSum = ['pf_employee', 'professional_tax', 'tds', 'esi', 'other_deductions']
+      .reduce((total, field) => total + Number(payroll[field] || 0), 0);
 
     const payrollData = {
       month: payroll.month,
@@ -137,7 +143,8 @@ export const generateFromSalaryStructures = async (req, res) => {
   try {
     const { month, year, employee_id } = req.body;
     if (employee_id) {
-      const id = await PayrollModel.generateFromSalaryStructure(employee_id, month, year);
+      const id = await PayrollModel.generateFromSalaryStructure(employee_id, month, year, req.user.id);
+      if (!id) return errorResponse(res, 'No active salary structure found for this employee', 404);
       return successResponse(res, { id }, 'Payroll generated from structure');
     }
     return errorResponse(res, 'Not implemented for all employees yet. Pass employee_id.', 400);

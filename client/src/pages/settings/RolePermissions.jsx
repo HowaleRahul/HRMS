@@ -31,10 +31,11 @@ export default function RolePermissions() {
         userAPI.getRoles(),
         userAPI.getPermissions()
       ]);
-      setRoles(rRes.data || []);
-      setAllPermissions(pRes.data || {});
-      if (rRes.data && rRes.data.length > 0) {
-        handleRoleSelect(rRes.data[0]);
+      const rolesData = rRes.data?.data || [];
+      setRoles(rolesData);
+      setAllPermissions(pRes.data?.data || {});
+      if (rolesData.length > 0) {
+        handleRoleSelect(rolesData[0]);
       }
     } catch (error) {
       toast.error('Failed to load roles and permissions');
@@ -47,7 +48,7 @@ export default function RolePermissions() {
     setActiveRole(role);
     try {
       const res = await userAPI.getRolePermissions(role.id);
-      setRolePermissions(res.data.map(p => p.id));
+      setRolePermissions((res.data?.data || []).map(p => p.id));
     } catch (error) {
       toast.error('Failed to load role permissions');
       setRolePermissions([]);
@@ -87,7 +88,7 @@ export default function RolePermissions() {
       }
       setIsModalOpen(false);
       const rRes = await userAPI.getRoles();
-      setRoles(rRes.data || []);
+      setRoles(rRes.data?.data || []);
     } catch (error) {
       toast.error('Failed to save role');
     }
@@ -100,7 +101,7 @@ export default function RolePermissions() {
         await userAPI.deleteRole(id);
         toast.success('Role deleted');
         const rRes = await userAPI.getRoles();
-        setRoles(rRes.data || []);
+        setRoles(rRes.data?.data || []);
         if (activeRole?.id === id) setActiveRole(null);
       } catch (error) {
         toast.error('Failed to delete role');

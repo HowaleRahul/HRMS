@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.get('/', authenticate, checkPermission('assets', 'view'), getAllAssets);
 router.get('/assignments', authenticate, checkPermission('assets', 'view'), getAssignments);
-router.get('/assignments/employee/:employeeId', authenticate, getAssignmentsByEmployee);
+router.get('/assignments/employee/:employeeId', authenticate, checkPermission('assets', 'view'), getAssignmentsByEmployee);
 router.get('/:id', authenticate, checkPermission('assets', 'view'), getAssetById);
 
 router.post('/', authenticate, checkPermission('assets', 'create'), [

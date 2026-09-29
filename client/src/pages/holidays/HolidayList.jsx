@@ -33,7 +33,7 @@ export default function HolidayList() {
     try {
       setLoading(true);
       const res = await holidayAPI.getByYear(year);
-      setHolidays(res.data || []);
+      setHolidays(res.data?.data || []);
     } catch (error) {
       toast.error('Failed to fetch holidays');
     } finally {

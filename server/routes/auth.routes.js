@@ -24,12 +24,12 @@ router.post('/forgot-password', validate([
 
 router.post('/reset-password', validate([
   body('token').notEmpty().withMessage('Token is required'),
-  body('newPassword').isLength({ min: 6 }).withMessage('Password must be at least 6 characters long')
+  body('newPassword').isLength({ min: 12 }).withMessage('Password must be at least 12 characters long')
 ]), AuthController.resetPassword);
 
 router.put('/change-password', authenticate, validate([
   body('currentPassword').notEmpty().withMessage('Current password is required'),
-  body('newPassword').isLength({ min: 6 }).withMessage('New password must be at least 6 characters long')
+  body('newPassword').isLength({ min: 12 }).withMessage('New password must be at least 12 characters long')
 ]), AuthController.changePassword);
 
 router.post('/logout', authenticate, AuthController.logout);

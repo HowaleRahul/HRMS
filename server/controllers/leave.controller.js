@@ -43,8 +43,18 @@ export const deleteLeaveType = async (req, res) => {
 
 export const getLeaveBalances = async (req, res) => {
   try {
+    const employeeId = req.params.employeeId === 'self' ? req.user.employee_id : Number(req.params.employeeId);
+    if (!employeeId) return errorResponse(res, 'Employee profile not found', 403);
+    if (Number(employeeId) !== Number(req.user.employee_id)) {
+      const [permissions] = await pool.execute(`
+        SELECT 1 FROM role_permissions rp
+        JOIN permissions p ON rp.permission_id = p.id
+        WHERE rp.role_id = ? AND p.module = 'leaves' AND p.action = 'view'
+      `, [req.user.role_id]);
+      if (permissions.length === 0) return errorResponse(res, 'Forbidden.', 403);
+    }
     const year = new Date().getFullYear();
-    const balances = await LeaveModel.getLeaveBalances(req.params.employeeId, year);
+    const balances = await LeaveModel.getLeaveBalances(employeeId, year);
     return successResponse(res, balances);
   } catch (error) {
     return errorResponse(res, 'Internal server error');
@@ -63,27 +73,35 @@ export const initializeLeaveBalances = async (req, res) => {
 
 export const applyLeave = async (req, res) => {
   try {
-    // Assuming req.user.employee_id is available
-    const employee_id = req.user.employee_id || req.body.employee_id;
-    if (!employee_id) return errorResponse(res, 'Employee ID required', 400);
-
-    const { leave_type_id, start_date, end_date, total_days, reason } = req.body;
-    
-    // Check balance
-    const year = new Date(start_date).getFullYear();
-    const balances = await LeaveModel.getLeaveBalances(employee_id, year);
-    const balance = balances.find(b => b.leave_type_id === leave_type_id);
-    
-    if (balance && (balance.total_days - balance.used_days) < total_days) {
-      return errorResponse(res, 'Insufficient leave balance', 400);
+    const employee_id = req.user.employee_id;
+    if (!employee_id) return errorResponse(res, 'Employee profile not found', 403);
+    if (req.body.employee_id && Number(req.body.employee_id) !== Number(employee_id)) {
+      return errorResponse(res, 'Cannot submit leave for another employee', 403);
     }
 
+    const { leave_type_id, start_date, end_date, reason } = req.body;
+
+    const startTime = Date.parse(`${start_date}T00:00:00Z`);
+    const endTime = Date.parse(`${end_date}T00:00:00Z`);
+    if (!Number.isFinite(startTime) || !Number.isFinite(endTime) || endTime < startTime) {
+      return errorResponse(res, 'Invalid leave date range', 400);
+    }
+    const startDate = new Date(startTime);
+    const endDate = new Date(endTime);
+    if (startDate.getUTCFullYear() !== endDate.getUTCFullYear()) {
+      return errorResponse(res, 'Leave requests cannot span calendar years', 400);
+    }
+    const requestedDays = Math.floor((endTime - startTime) / 86400000) + 1;
+
     const id = await LeaveModel.createLeaveRequest({
-      employee_id, leave_type_id, start_date, end_date, total_days, reason
+      employee_id, leave_type_id: Number(leave_type_id), start_date, end_date, total_days: requestedDays, reason
     });
     
     return successResponse(res, { id }, 'Leave request submitted successfully', 201);
   } catch (error) {
+    if (['LEAVE_OVERLAP', 'INSUFFICIENT_BALANCE', 'NO_LEAVE_BALANCE', 'EMPLOYEE_NOT_FOUND'].includes(error.code)) {
+      return errorResponse(res, error.message, error.code === 'LEAVE_OVERLAP' ? 409 : 400);
+    }
     logger.error('Apply leave error: ' + error.message);
     return errorResponse(res, 'Internal server error');
   }
@@ -168,6 +186,14 @@ export const getLeaveRequestById = async (req, res) => {
   try {
     const request = await LeaveModel.getLeaveRequestById(req.params.id);
     if (!request) return errorResponse(res, 'Leave request not found', 404);
+    if (Number(request.employee_id) !== Number(req.user.employee_id)) {
+      const [permissions] = await pool.execute(`
+        SELECT 1 FROM role_permissions rp
+        JOIN permissions p ON rp.permission_id = p.id
+        WHERE rp.role_id = ? AND p.module = 'leaves' AND p.action = 'view'
+      `, [req.user.role_id]);
+      if (permissions.length === 0) return errorResponse(res, 'Forbidden.', 403);
+    }
     return successResponse(res, request);
   } catch (error) {
     return errorResponse(res, 'Internal server error');

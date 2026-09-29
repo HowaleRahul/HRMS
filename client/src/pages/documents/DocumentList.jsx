@@ -38,7 +38,7 @@ export default function DocumentList() {
     try {
       setLoading(true);
       const res = await documentAPI.getAll({ employee_id: filterEmployee });
-      setDocuments(res.data || []);
+      setDocuments(res.data?.data || []);
     } catch (error) {
       toast.error('Failed to fetch documents');
     } finally {
@@ -79,6 +79,20 @@ export default function DocumentList() {
     }
   };
 
+  const handleDownload = async (doc) => {
+    try {
+      const response = await documentAPI.download(doc.id);
+      const url = URL.createObjectURL(response.data);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = doc.file_name || `document-${doc.id}`;
+      link.click();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+    } catch (error) {
+      toast.error('Failed to download document');
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -96,8 +110,8 @@ export default function DocumentList() {
   };
 
   const columns = [
-    { key: 'employee', label: 'Employee', render: (row) => `${row.first_name} ${row.last_name}` },
-    { key: 'document_type', label: 'Type', render: (row) => row.type_name },
+    { key: 'employee', label: 'Employee', render: (row) => row.employee_name },
+    { key: 'document_type', label: 'Type', render: (row) => row.document_type_name },
     { key: 'title', label: 'Title' },
     { key: 'document_number', label: 'Doc Number' },
     { key: 'is_verified', label: 'Status', render: (row) => (
@@ -105,9 +119,9 @@ export default function DocumentList() {
     )},
     { key: 'actions', label: 'Actions', render: (row) => (
       <div className={styles.actions}>
-        <a href={row.file_url} target="_blank" rel="noreferrer" title="View/Download"><Download size={18} /></a>
-        {!row.is_verified && <button onClick={() => handleVerify(row.id)} title="Verify"><CheckCircle size={18} /></button>}
-        <button onClick={() => handleDelete(row.id)} className={styles.deleteBtn} title="Delete"><Trash2 size={18} /></button>
+        <button onClick={() => handleDownload(row)} title="Download" aria-label={`Download ${row.file_name || row.title}`}><Download size={18} /></button>
+        {!row.is_verified && <button onClick={() => handleVerify(row.id)} title="Verify" aria-label={`Verify ${row.title}`}><CheckCircle size={18} /></button>}
+        <button onClick={() => handleDelete(row.id)} className={styles.deleteBtn} title="Delete" aria-label={`Delete ${row.title}`}><Trash2 size={18} /></button>
       </div>
     )}
   ];

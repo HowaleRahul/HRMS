@@ -34,6 +34,10 @@ export const getAttendanceById = async (req, res) => {
   try {
     const att = await AttendanceModel.getById(req.params.id);
     if (!att) return res.status(404).json({ success: false, message: 'Not found' });
+    const isHrAdmin = req.user.role?.name?.toLowerCase().includes('admin');
+    if (Number(att.employee_id) !== Number(req.user.employee_id) && !isHrAdmin) {
+      return res.status(403).json({ success: false, message: 'Forbidden' });
+    }
     res.status(200).json({ success: true, data: att });
   } catch (error) {
     res.status(500).json({ success: false, message: 'Server Error' });

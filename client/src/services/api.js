@@ -32,11 +32,13 @@ export const authAPI = {
   login: (credentials) => api.post('/auth/login', credentials),
   logout: () => api.post('/auth/logout'),
   getProfile: () => api.get('/auth/profile'),
-  forgotPassword: (email) => api.post('/auth/forgot-password', { email })
+  forgotPassword: (email) => api.post('/auth/forgot-password', { email }),
+  resetPassword: (token, newPassword) => api.post('/auth/reset-password', { token, newPassword })
 };
 
 export const employeeAPI = {
   getAll: (params) => api.get('/employees', { params }),
+  getFormOptions: () => api.get('/employees/form-options'),
   getById: (id) => api.get(`/employees/${id}`),
   create: (data) => api.post('/employees', data, { headers: { 'Content-Type': 'multipart/form-data' } }),
   update: (id, data) => api.put(`/employees/${id}`, data, { headers: { 'Content-Type': 'multipart/form-data' } }),
@@ -159,6 +161,7 @@ export const assetAPI = {
 export const documentAPI = {
   getAll: (params) => api.get('/documents', { params }),
   getById: (id) => api.get(`/documents/${id}`),
+  download: (id) => api.get(`/documents/${id}/download`, { responseType: 'blob' }),
   upload: (data) => api.post('/documents', data, { headers: { 'Content-Type': 'multipart/form-data' } }),
   delete: (id) => api.delete(`/documents/${id}`),
   verify: (id) => api.put(`/documents/${id}/verify`)

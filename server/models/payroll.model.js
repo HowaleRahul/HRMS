@@ -1,5 +1,52 @@
 import pool from '../config/db.js';
 
+const payrollColumns = [
+  'employee_id', 'month', 'year', 'basic_salary', 'hra', 'da', 'transport_allowance',
+  'medical_allowance', 'special_allowance', 'overtime_pay', 'bonus', 'gross_earnings',
+  'pf_employee', 'pf_employer', 'professional_tax', 'tds', 'esi', 'other_deductions',
+  'total_deductions', 'net_salary', 'generated_by'
+];
+const payrollInsertSql = `INSERT INTO payroll (${payrollColumns.join(', ')}) VALUES (${payrollColumns.map(() => '?').join(', ')})`;
+const payrollAmountFields = [
+  'basic_salary', 'hra', 'da', 'transport_allowance', 'medical_allowance',
+  'special_allowance', 'overtime_pay', 'bonus', 'pf_employee', 'pf_employer',
+  'professional_tax', 'tds', 'esi', 'other_deductions'
+];
+
+const buildPayrollValues = (data) => {
+  const employeeId = Number(data.employee_id);
+  const month = Number(data.month);
+  const year = Number(data.year);
+  if (!Number.isInteger(employeeId) || employeeId < 1 || !Number.isInteger(month) || month < 1 || month > 12 || !Number.isInteger(year) || year < 2000 || year > 2100) {
+    throw new Error('Invalid employee or payroll period');
+  }
+
+  const amounts = Object.fromEntries(payrollAmountFields.map(field => {
+    const amount = Number(data[field] ?? 0);
+    if (!Number.isFinite(amount) || amount < 0) throw new Error(`Invalid payroll amount: ${field}`);
+    return [field, amount];
+  }));
+  const roundMoney = amount => Math.round((amount + Number.EPSILON) * 100) / 100;
+  const grossEarnings = roundMoney(
+    amounts.basic_salary + amounts.hra + amounts.da + amounts.transport_allowance +
+    amounts.medical_allowance + amounts.special_allowance + amounts.overtime_pay + amounts.bonus
+  );
+  const totalDeductions = roundMoney(
+    amounts.pf_employee + amounts.professional_tax + amounts.tds + amounts.esi + amounts.other_deductions
+  );
+  const netSalary = roundMoney(grossEarnings - totalDeductions);
+  if (netSalary < 0) throw new Error('Payroll deductions cannot exceed gross earnings');
+
+  return [
+    employeeId, month, year, amounts.basic_salary, amounts.hra, amounts.da,
+    amounts.transport_allowance, amounts.medical_allowance, amounts.special_allowance,
+    amounts.overtime_pay, amounts.bonus, grossEarnings, amounts.pf_employee,
+    amounts.pf_employer, amounts.professional_tax, amounts.tds, amounts.esi,
+    amounts.other_deductions, totalDeductions, netSalary,
+    Number.isInteger(Number(data.generated_by)) ? Number(data.generated_by) : null
+  ];
+};
+
 export const getAll = async (filters) => {
   const { employee_id, department_id, month, year, payment_status, limit, offset } = filters;
   let query = `
@@ -50,7 +97,7 @@ export const getCount = async (filters) => {
 
 export const getById = async (id) => {
   const [rows] = await pool.execute(`
-    SELECT p.*, e.first_name, e.last_name, e.employee_code, d.name as department_name, des.name as designation_name
+    SELECT p.*, e.first_name, e.last_name, e.employee_code, d.name as department_name, des.title as designation_name
     FROM payroll p
     JOIN employees e ON p.employee_id = e.id
     LEFT JOIN departments d ON e.department_id = d.id
@@ -69,11 +116,7 @@ export const getByEmployeeMonthYear = async (employeeId, month, year) => {
 };
 
 export const generate = async (data) => {
-  const { employee_id, month, year, basic_salary, allowances, deductions, net_salary } = data;
-  const [result] = await pool.execute(
-    'INSERT INTO payroll (employee_id, month, year, basic_salary, allowances, deductions, net_salary, payment_status) VALUES (?, ?, ?, ?, ?, ?, ?, "pending")',
-    [employee_id, month, year, basic_salary, JSON.stringify(allowances || {}), JSON.stringify(deductions || {}), net_salary]
-  );
+  const [result] = await pool.execute(payrollInsertSql, buildPayrollValues(data));
   return result.insertId;
 };
 
@@ -83,11 +126,7 @@ export const bulkGenerate = async (records) => {
     await connection.beginTransaction();
     const insertedIds = [];
     for (const data of records) {
-      const { employee_id, month, year, basic_salary, allowances, deductions, net_salary } = data;
-      const [result] = await connection.execute(
-        'INSERT INTO payroll (employee_id, month, year, basic_salary, allowances, deductions, net_salary, payment_status) VALUES (?, ?, ?, ?, ?, ?, ?, "pending")',
-        [employee_id, month, year, basic_salary, JSON.stringify(allowances || {}), JSON.stringify(deductions || {}), net_salary]
-      );
+      const [result] = await connection.execute(payrollInsertSql, buildPayrollValues(data));
       insertedIds.push(result.insertId);
     }
     await connection.commit();
@@ -108,10 +147,10 @@ export const update = async (id, data) => {
   );
 };
 
-export const updatePaymentStatus = async (id, status, paymentDate, transactionRef) => {
+export const updatePaymentStatus = async (id, status, paymentDate, transactionReference) => {
   await pool.execute(
-    'UPDATE payroll SET payment_status = ?, payment_date = ?, transaction_ref = ? WHERE id = ?',
-    [status, paymentDate, transactionRef, id]
+    'UPDATE payroll SET payment_status = ?, payment_date = ?, transaction_reference = ? WHERE id = ?',
+    [status, paymentDate, transactionReference, id]
   );
 };
 
@@ -131,7 +170,7 @@ export const getMonthlyPayrollSummary = async (month, year) => {
   return rows[0];
 };
 
-export const generateFromSalaryStructure = async (employeeId, month, year) => {
+export const generateFromSalaryStructure = async (employeeId, month, year, generatedBy = null) => {
   const [rows] = await pool.execute(`
     SELECT basic_salary, hra, da, transport_allowance, medical_allowance, special_allowance, pf_employee, pf_employer, professional_tax, tds, esi, other_deductions 
     FROM salary_structures 
@@ -159,6 +198,7 @@ export const generateFromSalaryStructure = async (employeeId, month, year) => {
     tds: struct.tds,
     esi: struct.esi,
     other_deductions: struct.other_deductions,
-    net_salary
+    net_salary,
+    generated_by: generatedBy
   });
 };

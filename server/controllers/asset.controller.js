@@ -60,6 +60,10 @@ export const getAssignments = async (req, res) => {
 
 export const getAssignmentsByEmployee = async (req, res) => {
   try {
+    const isHrRole = ['super_admin', 'hr_admin', 'hr_executive'].includes(req.user.role?.name);
+    if (Number(req.params.employeeId) !== Number(req.user.employee_id) && !isHrRole) {
+      return res.status(403).json({ success: false, message: 'Forbidden' });
+    }
     const data = await AssetModel.getAssignmentsByEmployee(req.params.employeeId);
     res.status(200).json({ success: true, data });
   } catch (err) { res.status(500).json({ success: false, message: 'Server Error' }); }

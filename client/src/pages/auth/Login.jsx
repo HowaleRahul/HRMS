@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Eye, EyeOff, Shield } from 'lucide-react';
 import useAuth from '../../hooks/useAuth';
 import styles from './Login.module.css';
@@ -50,6 +50,7 @@ const Login = () => {
             <input 
               type="email" 
               className="form-control" 
+                required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email"
@@ -62,6 +63,7 @@ const Login = () => {
               <input 
                 type={showPassword ? "text" : "password"} 
                 className="form-control" 
+                required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter your password"
@@ -70,6 +72,7 @@ const Login = () => {
                 type="button" 
                 className={styles.eyeBtn}
                 onClick={() => setShowPassword(!showPassword)}
+                aria-label={showPassword ? 'Hide password' : 'Show password'}
               >
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </button>
@@ -81,7 +84,7 @@ const Login = () => {
               <input type="checkbox" />
               <span>Remember me</span>
             </label>
-            <a href="#" className={styles.forgot}>Forgot password?</a>
+            <Link to="/forgot-password" className={styles.forgot}>Forgot password?</Link>
           </div>
           
           <button type="submit" className={`btn btn-primary ${styles.submitBtn}`} disabled={loading}>

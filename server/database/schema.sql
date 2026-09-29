@@ -1,6 +1,5 @@
--- Create database
-DROP DATABASE IF EXISTS hrms_db;
-CREATE DATABASE hrms_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+-- Create database without deleting existing production data
+CREATE DATABASE IF NOT EXISTS hrms_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 USE hrms_db;
 
 -- ==============================================================================
@@ -224,9 +223,6 @@ CREATE TABLE users (
     deleted_at DATETIME NULL,
     FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE RESTRICT
 ) ENGINE=InnoDB;
-
-INSERT INTO users (username, email, password_hash, role_id) 
-VALUES ('admin', 'admin@hrms.com', '$2a$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 1);
 
 -- --------------------------------------------------------
 -- Departments & Designations

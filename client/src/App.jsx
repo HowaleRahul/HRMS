@@ -5,43 +5,28 @@ import { Toaster } from 'react-hot-toast';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import MainLayout from './components/layout/MainLayout';
 import Login from './pages/auth/Login';
+import ForgotPassword from './pages/auth/ForgotPassword';
+import ResetPassword from './pages/auth/ResetPassword';
 import NotFound from './pages/NotFound';
 import Loader from './components/common/Loader';
 import ErrorBoundary from './components/common/ErrorBoundary';
 
-// Dashboard
-import Dashboard from './pages/dashboard/Dashboard';
-
-// Employees
-import EmployeeList from './pages/employees/EmployeeList';
-import EmployeeForm from './pages/employees/EmployeeForm';
-import EmployeeView from './pages/employees/EmployeeView';
-
-// Departments & Designations
-import DepartmentList from './pages/departments/DepartmentList';
-import DesignationList from './pages/designations/DesignationList';
-
-// Attendance
-import AttendanceList from './pages/attendance/AttendanceList';
-import AttendanceReport from './pages/attendance/AttendanceReport';
-
-// Leave Management
-import LeaveList from './pages/leaves/LeaveList';
-import LeaveForm from './pages/leaves/LeaveForm';
-import LeaveBalance from './pages/leaves/LeaveBalance';
-
-// Payroll
-import PayrollList from './pages/payroll/PayrollList';
-import PayrollView from './pages/payroll/PayrollView';
-
-// Recruitment
-import RecruitmentDashboard from './pages/recruitment/RecruitmentDashboard';
-
-// Performance
-import PerformanceList from './pages/performance/PerformanceList';
-
-// Assets
-import AssetList from './pages/assets/AssetList';
+const Dashboard = lazy(() => import('./pages/dashboard/Dashboard'));
+const EmployeeList = lazy(() => import('./pages/employees/EmployeeList'));
+const EmployeeForm = lazy(() => import('./pages/employees/EmployeeForm'));
+const EmployeeView = lazy(() => import('./pages/employees/EmployeeView'));
+const DepartmentList = lazy(() => import('./pages/departments/DepartmentList'));
+const DesignationList = lazy(() => import('./pages/designations/DesignationList'));
+const AttendanceList = lazy(() => import('./pages/attendance/AttendanceList'));
+const AttendanceReport = lazy(() => import('./pages/attendance/AttendanceReport'));
+const LeaveList = lazy(() => import('./pages/leaves/LeaveList'));
+const LeaveForm = lazy(() => import('./pages/leaves/LeaveForm'));
+const LeaveBalance = lazy(() => import('./pages/leaves/LeaveBalance'));
+const PayrollList = lazy(() => import('./pages/payroll/PayrollList'));
+const PayrollView = lazy(() => import('./pages/payroll/PayrollView'));
+const RecruitmentDashboard = lazy(() => import('./pages/recruitment/RecruitmentDashboard'));
+const PerformanceList = lazy(() => import('./pages/performance/PerformanceList'));
+const AssetList = lazy(() => import('./pages/assets/AssetList'));
 
 // Documents
 const DocumentList = lazy(() => import('./pages/documents/DocumentList'));
@@ -64,8 +49,11 @@ export default function App() {
     <ErrorBoundary>
       <AuthProvider>
         <Toaster position="top-right" />
+        <Suspense fallback={<Loader />}>
         <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
 
         <Route path="/" element={
           <ProtectedRoute>
@@ -150,6 +138,7 @@ export default function App() {
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
+      </Suspense>
       </AuthProvider>
     </ErrorBoundary>
   );

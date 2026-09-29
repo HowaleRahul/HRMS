@@ -14,7 +14,7 @@ export const getAll = async (filters) => {
 
   if (search) { 
     query += ' AND (u.username LIKE ? OR u.email LIKE ? OR e.first_name LIKE ?)'; 
-    const term = `%\${search}%`;
+    const term = `%${search}%`;
     params.push(term, term, term); 
   }
   if (role_id) { query += ' AND u.role_id = ?'; params.push(role_id); }
@@ -43,7 +43,7 @@ export const getCount = async (filters) => {
 
   if (search) { 
     query += ' AND (u.username LIKE ? OR u.email LIKE ? OR e.first_name LIKE ?)'; 
-    const term = `%\${search}%`;
+    const term = `%${search}%`;
     params.push(term, term, term); 
   }
   if (role_id) { query += ' AND u.role_id = ?'; params.push(role_id); }
@@ -65,21 +65,29 @@ export const getById = async (id) => {
 
 export const create = async (data) => {
   const { username, email, password, role_id, employee_id } = data;
-  const salt = await bcrypt.genSalt(10);
+  const salt = await bcrypt.genSalt(12);
   const hashedPassword = await bcrypt.hash(password, salt);
   
   const [result] = await pool.execute(
-    'INSERT INTO users (username, email, password, role_id, employee_id) VALUES (?, ?, ?, ?, ?)',
+    'INSERT INTO users (username, email, password_hash, role_id, employee_id) VALUES (?, ?, ?, ?, ?)',
     [username, email, hashedPassword, role_id, employee_id || null]
   );
   return result.insertId;
 };
 
 export const update = async (id, data) => {
-  const { username, email, role_id, is_active, employee_id } = data;
+  const { username, email, password, role_id, is_active, employee_id } = data;
+  const values = [username, email, role_id, is_active, employee_id || null];
+  let passwordUpdate = '';
+  if (password) {
+    const hashedPassword = await bcrypt.hash(password, 12);
+    passwordUpdate = ', password_hash = ?';
+    values.push(hashedPassword);
+  }
+  values.push(id);
   await pool.execute(
-    'UPDATE users SET username = ?, email = ?, role_id = ?, is_active = ?, employee_id = ? WHERE id = ?',
-    [username, email, role_id, is_active, employee_id || null, id]
+    `UPDATE users SET username = ?, email = ?, role_id = ?, is_active = ?, employee_id = ?${passwordUpdate} WHERE id = ?`,
+    values
   );
 };
 

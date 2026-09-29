@@ -33,7 +33,9 @@ export const deleteLeaveType = async (id) => {
 
 export const getLeaveBalances = async (employeeId, year) => {
   const [rows] = await pool.execute(`
-    SELECT lb.*, lt.name as leave_type_name, lt.is_paid
+        SELECT lb.*, lb.total_days AS total, lb.used_days AS used,
+          (lb.total_days - lb.used_days) AS remaining,
+          lt.name as leave_type_name, lt.is_paid
     FROM leave_balances lb
     JOIN leave_types lt ON lb.leave_type_id = lt.id
     WHERE lb.employee_id = ? AND lb.year = ? AND lb.is_deleted = 0
@@ -112,11 +114,51 @@ export const getLeaveRequestById = async (id) => {
 
 export const createLeaveRequest = async (data) => {
   const { employee_id, leave_type_id, start_date, end_date, total_days, reason } = data;
-  const [result] = await pool.execute(
-    'INSERT INTO leave_requests (employee_id, leave_type_id, start_date, end_date, total_days, reason, status) VALUES (?, ?, ?, ?, ?, ?, "pending")',
-    [employee_id, leave_type_id, start_date, end_date, total_days, reason]
-  );
-  return result.insertId;
+  const connection = await pool.getConnection();
+  try {
+    await connection.beginTransaction();
+    const [employees] = await connection.execute(
+      'SELECT id FROM employees WHERE id = ? AND is_deleted = 0 FOR UPDATE',
+      [employee_id]
+    );
+    if (employees.length === 0) throw Object.assign(new Error('Employee not found'), { code: 'EMPLOYEE_NOT_FOUND' });
+
+    const year = new Date(`${start_date}T00:00:00Z`).getUTCFullYear();
+    const [balances] = await connection.execute(`
+      SELECT total_days, used_days FROM leave_balances
+      WHERE employee_id = ? AND leave_type_id = ? AND year = ? AND is_deleted = 0
+      FOR UPDATE
+    `, [employee_id, leave_type_id, year]);
+    if (balances.length === 0) throw Object.assign(new Error('No leave balance exists for this leave type'), { code: 'NO_LEAVE_BALANCE' });
+
+    const [overlaps] = await connection.execute(`
+      SELECT id FROM leave_requests
+      WHERE employee_id = ? AND status IN ('pending', 'approved') AND is_deleted = 0
+        AND start_date <= ? AND end_date >= ?
+      LIMIT 1
+    `, [employee_id, end_date, start_date]);
+    if (overlaps.length > 0) throw Object.assign(new Error('Leave request overlaps an existing request'), { code: 'LEAVE_OVERLAP' });
+
+    const [requested] = await connection.execute(`
+      SELECT COALESCE(SUM(total_days), 0) AS pending_days FROM leave_requests
+      WHERE employee_id = ? AND leave_type_id = ? AND YEAR(start_date) = ?
+        AND status = 'pending' AND is_deleted = 0
+    `, [employee_id, leave_type_id, year]);
+    const availableDays = Number(balances[0].total_days) - Number(balances[0].used_days) - Number(requested[0].pending_days);
+    if (availableDays < Number(total_days)) throw Object.assign(new Error('Insufficient leave balance'), { code: 'INSUFFICIENT_BALANCE' });
+
+    const [result] = await connection.execute(
+      'INSERT INTO leave_requests (employee_id, leave_type_id, start_date, end_date, total_days, reason, status) VALUES (?, ?, ?, ?, ?, ?, "pending")',
+      [employee_id, leave_type_id, start_date, end_date, total_days, reason]
+    );
+    await connection.commit();
+    return result.insertId;
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
 };
 
 export const updateLeaveRequestStatus = async (id, status, approvedBy, rejectionReason = null) => {

@@ -169,17 +169,17 @@ export const forgotPassword = async (req, res) => {
 
     await AuthModel.setPasswordResetToken(user.id, hashedToken, expires);
 
-    const resetUrl = `\${config.clientUrl}/reset-password/\${resetToken}`;
+    const resetUrl = `${config.clientUrl}/reset-password/${resetToken}`;
     const emailBody = `
       <p>You requested a password reset</p>
-      <p>Click this link to reset your password: <a href="\${resetUrl}">\${resetUrl}</a></p>
+      <p>Click this link to reset your password: <a href="${resetUrl}">${resetUrl}</a></p>
       <p>If you did not request this, please ignore this email.</p>
     `;
 
     const emailSent = await sendEmail(user.email, 'Password Reset Request', emailBody);
     
     if (!emailSent) {
-      logger.warn(`Email could not be sent to \${user.email}. Password reset link: \${resetUrl}`);
+      logger.warn('Password reset email could not be sent.');
     }
 
     await createAuditLog(user.id, 'FORGOT_PASSWORD', 'AUTH', user.id, null, null, req);
@@ -198,7 +198,7 @@ export const resetPassword = async (req, res) => {
     
     const user = await AuthModel.findByResetToken(hashedToken);
     
-    if (!user || new Date(user.reset_token_expires) < new Date()) {
+    if (!user || new Date(user.password_reset_expires) < new Date()) {
       return errorResponse(res, 'Invalid or expired reset token', 400);
     }
 

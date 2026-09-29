@@ -1,4 +1,5 @@
 import mysql from 'mysql2/promise';
+import bcrypt from 'bcryptjs';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -13,6 +14,11 @@ const setupDatabase = async () => {
   console.log('Starting database setup...');
   
   try {
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminPassword || adminPassword.length < 12) {
+      throw new Error('Set ADMIN_PASSWORD to a value at least 12 characters long before database setup.');
+    }
+
     const connection = await mysql.createConnection({
       host: process.env.DB_HOST || 'localhost',
       port: process.env.DB_PORT || 3306,
@@ -47,6 +53,12 @@ const setupDatabase = async () => {
     
     console.log('Executing schema...');
     await connection.query(schema);
+
+    const passwordHash = await bcrypt.hash(adminPassword, 12);
+    await connection.execute(
+      'INSERT INTO users (username, email, password_hash, role_id) VALUES (?, ?, ?, ?)',
+      ['admin', 'admin@hrms.com', passwordHash, 1]
+    );
     
     console.log('Database setup completed successfully.');
     await connection.end();

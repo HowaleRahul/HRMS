@@ -72,7 +72,7 @@ const LeaveBalance = () => {
             return (
               <div key={bal.leave_type_id} className={styles.balanceCard}>
                 <div className={styles.cardHeader}>
-                  <h3 className={styles.typeTitle}>{bal.leave_type?.name || 'Leave'}</h3>
+                  <h3 className={styles.typeTitle}>{bal.leave_type_name || 'Leave'}</h3>
                   <div className={styles.totalBadge}>{bal.total} Total</div>
                 </div>
                 

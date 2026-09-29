@@ -60,14 +60,14 @@ export const lockAccount = async (userId, until) => {
 
 export const setPasswordResetToken = async (userId, token, expires) => {
   await pool.execute(
-    'UPDATE users SET reset_token = ?, reset_token_expires = ? WHERE id = ?',
+    'UPDATE users SET password_reset_token = ?, password_reset_expires = ? WHERE id = ?',
     [token, expires, userId]
   );
 };
 
 export const findByResetToken = async (token) => {
   const [rows] = await pool.execute(
-    'SELECT * FROM users WHERE reset_token = ? AND is_deleted = 0',
+    'SELECT * FROM users WHERE password_reset_token = ? AND is_deleted = 0',
     [token]
   );
   return rows[0] || null;
@@ -75,7 +75,7 @@ export const findByResetToken = async (token) => {
 
 export const updatePassword = async (userId, hashedPassword) => {
   await pool.execute(
-    'UPDATE users SET password_hash = ?, reset_token = NULL, reset_token_expires = NULL WHERE id = ?',
+    'UPDATE users SET password_hash = ?, password_reset_token = NULL, password_reset_expires = NULL WHERE id = ?',
     [hashedPassword, userId]
   );
 };

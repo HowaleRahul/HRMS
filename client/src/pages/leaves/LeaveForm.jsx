@@ -66,7 +66,7 @@ const LeaveForm = () => {
   };
 
   const getBalance = (typeId) => {
-    const bal = balances.find(b => b.leave_type_id === typeId);
+    const bal = balances.find(b => Number(b.leave_type_id) === Number(typeId));
     return bal ? bal.remaining : 0;
   };
 

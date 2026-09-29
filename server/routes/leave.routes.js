@@ -21,14 +21,14 @@ router.post('/balances/initialize/:employeeId', authenticate, checkPermission('l
 
 router.get('/requests', authenticate, checkPermission('leaves', 'view'), LeaveController.getLeaveRequests);
 router.get('/requests/team', authenticate, LeaveController.getTeamLeaveRequests);
-router.get('/requests/pending-count', authenticate, LeaveController.getPendingLeaveCount);
+router.get('/requests/pending-count', authenticate, checkPermission('leaves', 'view'), LeaveController.getPendingLeaveCount);
 router.get('/requests/:id', authenticate, LeaveController.getLeaveRequestById);
 
 router.post('/requests', authenticate, checkPermission('leaves', 'create'), validate([
-  body('leave_type_id').isInt().withMessage('Leave type ID required'),
+  body('leave_type_id').isInt({ min: 1 }).withMessage('Leave type ID required'),
   body('start_date').isDate().withMessage('Valid start date required'),
   body('end_date').isDate().withMessage('Valid end date required'),
-  body('total_days').isFloat({ min: 0.5 }).withMessage('Total days must be at least 0.5')
+  body('reason').trim().notEmpty().withMessage('Reason is required')
 ]), LeaveController.applyLeave);
 
 router.put('/requests/:id/approve', authenticate, checkPermission('leaves', 'approve'), LeaveController.approveLeave);

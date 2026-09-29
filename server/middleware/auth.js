@@ -20,7 +20,9 @@ export const authenticate = async (req, res, next) => {
     
     // Fetch user basic info
     const [rows] = await pool.execute(
-      'SELECT id, role_id, is_active FROM users WHERE id = ? AND is_deleted = 0',
+      `SELECT u.id, u.role_id, u.employee_id, u.is_active, r.name AS role_name, r.display_name AS role_display_name
+       FROM users u JOIN roles r ON r.id = u.role_id AND r.is_deleted = 0
+       WHERE u.id = ? AND u.is_deleted = 0`,
       [decoded.id]
     );
 
@@ -29,8 +31,14 @@ export const authenticate = async (req, res, next) => {
     }
 
     req.user = decoded;
-    // CRITICAL FIX: Always fetch the source of truth for the role ID from the database, not the JWT
     req.user.role_id = rows[0].role_id;
+    req.user.employee_id = rows[0].employee_id;
+    req.user.role = {
+      ...decoded.role,
+      id: rows[0].role_id,
+      name: rows[0].role_name,
+      display_name: rows[0].role_display_name
+    };
     next();
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
@@ -42,7 +50,7 @@ export const authenticate = async (req, res, next) => {
 
 export const authorize = (...roles) => {
   return (req, res, next) => {
-    if (!req.user || !roles.includes(req.user.role)) {
+    if (!req.user || !roles.includes(req.user.role?.name)) {
       return errorResponse(res, 'Forbidden. You do not have access to this resource.', 403);
     }
     next();

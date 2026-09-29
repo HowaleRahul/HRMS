@@ -18,12 +18,12 @@ export const generatePayslipPDF = (payrollData, employeeData) => {
       doc.moveDown();
 
       doc.text(`Month/Year: ${payrollData.month}/${payrollData.year}`);
-      doc.text(`Basic Salary: $${payrollData.basic_salary}`);
-      doc.text(`Allowances: $${payrollData.allowances}`);
-      doc.text(`Deductions: $${payrollData.deductions}`);
+      doc.text(`Basic Salary (INR): ${payrollData.basic_salary}`);
+      doc.text(`Allowances (INR): ${payrollData.allowances}`);
+      doc.text(`Deductions (INR): ${payrollData.deductions}`);
       doc.moveDown();
       
-      doc.fontSize(14).text(`Net Salary: $${payrollData.net_salary}`, { underline: true });
+      doc.fontSize(14).text(`Net Salary (INR): ${payrollData.net_salary}`, { underline: true });
 
       doc.end();
     } catch (error) {

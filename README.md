@@ -82,8 +82,10 @@ cd server
 node database/setup.js
 ```
 
+Set `ADMIN_PASSWORD` in `server/.env` to a unique password of at least 12 characters before running setup. Do not reuse this password elsewhere.
+
 This creates the `hrms_db` database with 30+ tables and seed data including:
-- Default admin user: `admin` / `Admin@123`
+- Initial super admin username: `admin` (password is the configured `ADMIN_PASSWORD`)
 - 5 roles with permissions
 - 8 departments, 13 designations
 - Leave types, holidays, master data

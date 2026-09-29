@@ -4,7 +4,7 @@ export const getEmployeeReport = async (filters) => {
   const { department_id, designation_id, is_active, joining_date_from, joining_date_to } = filters;
   let query = `
     SELECT e.id, e.employee_code, e.first_name, e.last_name, e.email, e.phone, e.joining_date, e.is_active,
-           d.name as department, des.name as designation
+           d.name as department, des.title as designation
     FROM employees e
     LEFT JOIN departments d ON e.department_id = d.id
     LEFT JOIN designations des ON e.designation_id = des.id

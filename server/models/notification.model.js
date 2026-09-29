@@ -80,6 +80,10 @@ export const getUnreadCount = async (userId) => {
   return rows[0].count;
 };
 
-export const softDelete = async (id) => {
-  await pool.execute('UPDATE notifications SET is_deleted = 1, deleted_at = CURRENT_TIMESTAMP WHERE id = ?', [id]);
+export const softDelete = async (id, userId) => {
+  const [result] = await pool.execute(
+    'UPDATE notifications SET is_deleted = 1, deleted_at = CURRENT_TIMESTAMP WHERE id = ? AND user_id = ?',
+    [id, userId]
+  );
+  return result.affectedRows;
 };

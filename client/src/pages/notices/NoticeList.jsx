@@ -34,7 +34,7 @@ export default function NoticeList() {
     try {
       setLoading(true);
       const res = await noticeAPI.getAll(); // Or getActive for non-admins
-      setNotices(res.data || []);
+      setNotices(res.data?.data || []);
     } catch (error) {
       toast.error('Failed to fetch notices');
     } finally {

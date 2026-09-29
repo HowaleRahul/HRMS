@@ -45,8 +45,8 @@ export const markAllAsRead = async (req, res) => {
 
 export const deleteNotification = async (req, res) => {
   try {
-    // Optional: Check if notification belongs to user
-    await NotificationModel.softDelete(req.params.id);
+    const affectedRows = await NotificationModel.softDelete(req.params.id, req.user.id);
+    if (affectedRows === 0) return errorResponse(res, 'Notification not found', 404);
     return successResponse(res, null, 'Notification deleted');
   } catch (error) {
     return errorResponse(res, 'Internal server error');

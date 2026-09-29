@@ -24,11 +24,17 @@ router.get('/:id', authenticate, checkPermission('users', 'view'), UserControlle
 router.post('/', authenticate, checkPermission('users', 'create'), validate([
   body('username').notEmpty().withMessage('Username is required'),
   body('email').isEmail().withMessage('Valid email is required'),
-  body('password').isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
+  body('password').isLength({ min: 12 }).withMessage('Password must be at least 12 characters'),
   body('role_id').isInt().withMessage('Role ID is required')
 ]), UserController.createUser);
 
-router.put('/:id', authenticate, checkPermission('users', 'update'), UserController.updateUser);
+router.put('/:id', authenticate, checkPermission('users', 'update'), validate([
+  body('username').notEmpty().withMessage('Username is required'),
+  body('email').isEmail().withMessage('Valid email is required'),
+  body('password').optional({ checkFalsy: true }).isLength({ min: 12 }).withMessage('Password must be at least 12 characters'),
+  body('role_id').isInt({ min: 1 }).withMessage('Role ID is required'),
+  body('is_active').isInt({ min: 0, max: 1 }).withMessage('Active status must be 0 or 1')
+]), UserController.updateUser);
 router.delete('/:id', authenticate, checkPermission('users', 'delete'), UserController.deleteUser);
 
 export default router;
