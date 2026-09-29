@@ -1,0 +1,95 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 2px solid transparent;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.activeCard {
+  border-color: #3b82f6;
+  background: #f8fafc;
+}
+
+.cardIcon {
+  color: #3b82f6;
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1e293b;
+  text-align: center;
+}
+
+.contentArea {
+  background: white;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.exports {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: #94a3b8;
+  text-align: center;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+}
+
+.emptyState p {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+}
+
+.tableWrapper {
+  overflow-x: auto;
+}

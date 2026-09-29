@@ -1,0 +1,21 @@
+2026-09-28 12:57:09 [ERROR]: Failed to load route /api/auth: Invalid or unexpected token
+2026-09-28 12:57:09 [ERROR]: Failed to load route /api/employees: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\upload.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\employee.routes.js
+2026-09-28 12:57:09 [ERROR]: Failed to load route /api/payroll: Invalid or unexpected token
+2026-09-28 12:57:09 [ERROR]: Failed to load route /api/documents: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\upload.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\document.routes.js
+2026-09-28 12:57:09 [ERROR]: Failed to load route /api/notices: Invalid or unexpected token
+2026-09-28 12:57:09 [ERROR]: Failed to load route /api/reports: Invalid or unexpected token
+2026-09-28 12:57:09 [ERROR]: Failed to load route /api/users: Invalid or unexpected token
+2026-09-28 12:57:09 [INFO]: Server running on port 5000
+2026-09-28 12:57:09 [ERROR]: Database connection failed: Access denied for user 'root'@'localhost' (using password: NO)
+2026-09-28 12:58:43 [ERROR]: Failed to load route /api/notices: Invalid or unexpected token
+2026-09-28 12:58:43 [ERROR]: Failed to load route /api/users: Invalid or unexpected token
+2026-09-28 12:58:43 [INFO]: Server running on port 5000
+2026-09-28 12:58:43 [INFO]: Database connected successfully
+2026-09-28 12:59:57 [ERROR]: Failed to load route /api/assets: missing ) after argument list
+2026-09-28 12:59:57 [INFO]: Server running on port 5000
+2026-09-28 12:59:57 [INFO]: Database connected successfully
+2026-09-28 13:00:46 [INFO]: Server running on port 5000
+2026-09-28 13:00:46 [INFO]: Database connected successfully
+2026-09-28 13:20:08 [INFO]: Server running on port 5000
+2026-09-28 13:20:09 [INFO]: Database connected successfully
+2026-09-28 14:13:23 [INFO]: Database connected successfully

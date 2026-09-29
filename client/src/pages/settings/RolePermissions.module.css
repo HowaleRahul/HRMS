@@ -1,0 +1,181 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: calc(100vh - 120px);
+}
+
+.layout {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+  min-height: 0; /* for flex child scrolling */
+}
+
+.sidebar {
+  width: 250px;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.sidebarHeader h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: #1e293b;
+}
+
+.roleList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  overflow-y: auto;
+}
+
+.roleList li {
+  padding: 1rem;
+  border-bottom: 1px solid #f1f5f9;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.2s;
+  color: #475569;
+}
+
+.roleList li:hover {
+  background: #f8fafc;
+}
+
+.roleList li.activeRole {
+  background: #eff6ff;
+  color: #2563eb;
+  font-weight: 500;
+  border-left: 3px solid #3b82f6;
+}
+
+.roleActions {
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.roleList li:hover .roleActions {
+  opacity: 1;
+}
+
+.roleActions button {
+  background: none;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  padding: 0.25rem;
+}
+
+.roleActions button:hover {
+  color: #3b82f6;
+}
+
+.roleActions button:last-child:hover {
+  color: #ef4444;
+}
+
+.mainContent {
+  flex: 1;
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.contentHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.contentHeader h3 {
+  margin: 0;
+  color: #1e293b;
+}
+
+.gridContainer {
+  padding: 1.5rem;
+  overflow: auto;
+  flex: 1;
+}
+
+.permissionsTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.permissionsTable th,
+.permissionsTable td {
+  padding: 0.75rem 1rem;
+  border: 1px solid #e2e8f0;
+  text-align: center;
+}
+
+.permissionsTable th {
+  background: #f8fafc;
+  font-weight: 600;
+  color: #475569;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.permissionsTable td.moduleName {
+  text-align: left;
+  font-weight: 500;
+  color: #1e293b;
+  background: #f8fafc;
+  position: sticky;
+  left: 0;
+  z-index: 5;
+}
+
+.checkbox {
+  width: 1.25rem;
+  height: 1.25rem;
+  cursor: pointer;
+  accent-color: #3b82f6;
+}
+
+.emptyState {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #94a3b8;
+  font-size: 1.125rem;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formActions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1rem;
+}

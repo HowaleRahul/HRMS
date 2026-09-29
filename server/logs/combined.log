@@ -1,0 +1,144 @@
+2026-09-28 12:56:21 [ERROR]: Failed to load route /api/auth: Invalid or unexpected token
+2026-09-28 12:56:21 [ERROR]: Failed to load route /api/employees: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\employee.routes.js
+2026-09-28 12:56:21 [ERROR]: Failed to load route /api/departments: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\department.routes.js
+2026-09-28 12:56:21 [ERROR]: Failed to load route /api/designations: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\designation.routes.js
+2026-09-28 12:56:21 [ERROR]: Failed to load route /api/attendance: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\attendance.routes.js
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/payroll: Invalid or unexpected token
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/recruitment: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\recruitment.routes.js
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/documents: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\document.routes.js
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/performance: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\performance.routes.js
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/assets: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\auth.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\asset.routes.js
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/notices: Invalid or unexpected token
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/reports: Invalid or unexpected token
+2026-09-28 12:56:23 [ERROR]: Failed to load route /api/users: Invalid or unexpected token
+2026-09-28 12:56:23 [INFO]: Server running on port 5000
+2026-09-28 12:56:23 [INFO]: Database connected successfully
+2026-09-28 12:57:00 [ERROR]: Failed to load route /api/auth: Invalid or unexpected token
+2026-09-28 12:57:00 [ERROR]: Failed to load route /api/employees: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\upload.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\employee.routes.js
+2026-09-28 12:57:00 [ERROR]: Failed to load route /api/payroll: Invalid or unexpected token
+2026-09-28 12:57:00 [ERROR]: Failed to load route /api/documents: Cannot find module 'C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\middleware\upload.middleware.js' imported from C:\Users\Rahul\OneDrive\Desktop\NODE-HRMS\server\routes\document.routes.js
+2026-09-28 12:57:00 [ERROR]: Failed to load route /api/notices: Invalid or unexpected token
+2026-09-28 12:57:00 [ERROR]: Failed to load route /api/reports: Invalid or unexpected token
+2026-09-28 12:57:00 [ERROR]: Failed to load route /api/users: Invalid or unexpected token
+2026-09-28 12:57:00 [INFO]: Server running on port 5000
+2026-09-28 12:57:00 [INFO]: Database connected successfully
+2026-09-28 12:57:22 [ERROR]: Failed to load route /api/auth: Invalid or unexpected token
+2026-09-28 12:57:23 [ERROR]: Failed to load route /api/payroll: Invalid or unexpected token
+2026-09-28 12:57:23 [ERROR]: Failed to load route /api/notices: Invalid or unexpected token
+2026-09-28 12:57:23 [ERROR]: Failed to load route /api/reports: Invalid or unexpected token
+2026-09-28 12:57:23 [ERROR]: Failed to load route /api/users: Invalid or unexpected token
+2026-09-28 12:57:23 [INFO]: Server running on port 5000
+2026-09-28 12:57:23 [INFO]: Database connected successfully
+2026-09-28 12:58:15 [ERROR]: Failed to load route /api/notices: Invalid or unexpected token
+2026-09-28 12:58:15 [ERROR]: Failed to load route /api/users: Invalid or unexpected token
+2026-09-28 12:58:15 [INFO]: Server running on port 5000
+2026-09-28 12:58:15 [INFO]: Database connected successfully
+2026-09-28 12:58:34 [ERROR]: Failed to load route /api/notices: Invalid or unexpected token
+2026-09-28 12:58:34 [ERROR]: Failed to load route /api/users: Invalid or unexpected token
+2026-09-28 12:58:34 [INFO]: Server running on port 5000
+2026-09-28 12:58:34 [INFO]: Database connected successfully
+2026-09-28 12:59:51 [ERROR]: Failed to load route /api/assets: missing ) after argument list
+2026-09-28 12:59:51 [INFO]: Server running on port 5000
+2026-09-28 12:59:51 [INFO]: Database connected successfully
+2026-09-28 13:00:36 [INFO]: Server running on port 5000
+2026-09-28 13:00:36 [INFO]: Database connected successfully
+2026-09-28 13:22:25 [INFO]: Server running on port 5000
+2026-09-28 13:22:25 [INFO]: Database connected successfully
+2026-09-28 13:22:33 [INFO]: Server running on port 5000
+2026-09-28 13:22:33 [INFO]: Database connected successfully
+2026-09-28 13:24:31 [INFO]: Server running on port 5000
+2026-09-28 13:24:31 [INFO]: Database connected successfully
+2026-09-28 13:24:48 [INFO]: Server running on port 5000
+2026-09-28 13:24:48 [INFO]: Database connected successfully
+2026-09-28 13:28:02 [INFO]: Server running on port 5000
+2026-09-28 13:28:02 [INFO]: Database connected successfully
+2026-09-28 13:28:22 [INFO]: Server running on port 5000
+2026-09-28 13:28:23 [INFO]: Database connected successfully
+2026-09-28 13:28:38 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:28:38 [INFO]: Server running on port 5000
+2026-09-28 13:28:38 [INFO]: Database connected successfully
+2026-09-28 13:29:26 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:29:26 [INFO]: Server running on port 5000
+2026-09-28 13:29:26 [INFO]: Database connected successfully
+2026-09-28 13:30:23 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:30:23 [INFO]: Server running on port 5000
+2026-09-28 13:30:23 [INFO]: Database connected successfully
+2026-09-28 13:30:51 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:30:51 [INFO]: Server running on port 5000
+2026-09-28 13:30:51 [INFO]: Database connected successfully
+2026-09-28 13:31:26 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:31:26 [INFO]: Server running on port 5000
+2026-09-28 13:31:26 [INFO]: Database connected successfully
+2026-09-28 13:31:32 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:31:32 [INFO]: Server running on port 5000
+2026-09-28 13:31:32 [INFO]: Database connected successfully
+2026-09-28 13:34:00 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:34:00 [INFO]: Server running on port 5000
+2026-09-28 13:34:00 [INFO]: Database connected successfully
+2026-09-28 13:34:15 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:34:15 [INFO]: Server running on port 5000
+2026-09-28 13:34:15 [INFO]: Database connected successfully
+2026-09-28 13:34:52 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:34:52 [ERROR]: Failed to load route /api/reports: Invalid regular expression: /^[=+\\-@]/: Range out of order in character class
+2026-09-28 13:34:52 [INFO]: Server running on port 5000
+2026-09-28 13:34:52 [INFO]: Database connected successfully
+2026-09-28 13:37:13 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:37:13 [ERROR]: Failed to load route /api/reports: Invalid regular expression: /^[=+\\-@]/: Range out of order in character class
+2026-09-28 13:37:13 [INFO]: Server running on port 5000
+2026-09-28 13:37:13 [INFO]: Database connected successfully
+2026-09-28 13:38:27 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:38:27 [ERROR]: Failed to load route /api/reports: Invalid regular expression: /^[=+\\-@]/: Range out of order in character class
+2026-09-28 13:38:27 [INFO]: Server running on port 5000
+2026-09-28 13:38:27 [INFO]: Database connected successfully
+2026-09-28 13:38:36 [ERROR]: Failed to load route /api/payroll: Missing catch or finally after try
+2026-09-28 13:38:36 [ERROR]: Failed to load route /api/reports: Invalid regular expression: /^[=+\\-@]/: Range out of order in character class
+2026-09-28 13:38:36 [INFO]: Server running on port 5000
+2026-09-28 13:38:36 [INFO]: Database connected successfully
+2026-09-28 13:39:44 [ERROR]: Failed to load route /api/reports: Invalid regular expression: /^[=+\\-@]/: Range out of order in character class
+2026-09-28 13:39:44 [INFO]: Server running on port 5000
+2026-09-28 13:39:44 [INFO]: Database connected successfully
+2026-09-28 13:40:07 [INFO]: Server running on port 5000
+2026-09-28 13:40:07 [INFO]: Database connected successfully
+2026-09-28 13:40:28 [INFO]: Server running on port 5000
+2026-09-28 13:40:28 [INFO]: Database connected successfully
+2026-09-28 13:44:56 [INFO]: Server running on port 5000
+2026-09-28 13:44:56 [INFO]: Database connected successfully
+2026-09-28 13:45:02 [INFO]: Server running on port 5000
+2026-09-28 13:45:02 [INFO]: Database connected successfully
+2026-09-28 13:45:21 [INFO]: Server running on port 5000
+2026-09-28 13:45:21 [INFO]: Database connected successfully
+2026-09-28 13:45:37 [INFO]: Server running on port 5000
+2026-09-28 13:45:37 [INFO]: Database connected successfully
+2026-09-28 13:46:08 [INFO]: Server running on port 5000
+2026-09-28 13:46:08 [INFO]: Database connected successfully
+2026-09-28 13:53:32 [ERROR]: Login error: Illegal arguments: string, undefined
+2026-09-28 13:54:47 [INFO]: Server running on port 5000
+2026-09-28 13:54:47 [INFO]: Database connected successfully
+2026-09-28 13:58:02 [ERROR]: Login error: Unknown column 'account_locked_until' in 'field list'
+2026-09-28 13:58:35 [INFO]: Server running on port 5000
+2026-09-28 13:58:35 [INFO]: Database connected successfully
+2026-09-28 14:03:00 [ERROR]: Failed to create audit log: Bind parameters must not contain undefined. To pass SQL NULL specify JS null
+2026-09-28 14:04:54 [INFO]: Server running on port 5000
+2026-09-28 14:04:54 [INFO]: Database connected successfully
+2026-09-28 14:04:59 [INFO]: Server running on port 5000
+2026-09-28 14:04:59 [INFO]: Database connected successfully
+2026-09-28 14:06:23 [INFO]: Server running on port 5000
+2026-09-28 14:06:23 [INFO]: Database connected successfully
+2026-09-28 14:09:08 [INFO]: Server running on port 5000
+2026-09-28 14:09:08 [INFO]: Database connected successfully
+2026-09-28 14:10:39 [INFO]: Server running on port 5000
+2026-09-28 14:10:39 [INFO]: Database connected successfully
+2026-09-28 14:11:26 [INFO]: Server running on port 5000
+2026-09-28 14:11:26 [INFO]: Database connected successfully
+2026-09-28 14:15:08 [INFO]: Server running on port 5000
+2026-09-28 14:15:08 [INFO]: Database connected successfully
+2026-09-28 14:15:14 [INFO]: Server running on port 5000
+2026-09-28 14:15:14 [INFO]: Database connected successfully
+2026-09-28 14:15:19 [INFO]: Database connected successfully
+2026-09-28 14:16:01 [INFO]: Server running on port 5000
+2026-09-28 14:16:02 [INFO]: Database connected successfully
+2026-09-28 14:16:05 [INFO]: Database connected successfully
+2026-09-28 14:28:18 [INFO]: Server running on port 5000
+2026-09-28 14:28:18 [INFO]: Database connected successfully
+2026-09-28 14:28:53 [INFO]: Server running on port 5000
+2026-09-28 14:28:53 [INFO]: Database connected successfully

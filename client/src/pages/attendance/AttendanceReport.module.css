@@ -1,0 +1,51 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.filtersCard {
+  background: #fff;
+  padding: var(--spacing-4);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-200);
+}
+
+.calendarCard {
+  background: #fff;
+  padding: var(--spacing-6);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-200);
+}
+
+.eventContent {
+  padding: 2px 4px;
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.eventTime {
+  font-size: 0.65rem;
+  opacity: 0.9;
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: var(--spacing-6);
+}
+
+/* FullCalendar overrides */
+:global(.fc-event) {
+  cursor: pointer;
+  border: none !important;
+  border-radius: 4px;
+}
+
+:global(.fc-daygrid-day-number) {
+  color: var(--color-gray-700);
+  font-weight: 500;
+}

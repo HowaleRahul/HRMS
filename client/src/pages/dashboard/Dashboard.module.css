@@ -1,0 +1,218 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-6);
+}
+
+.mainRow {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: var(--spacing-6);
+}
+
+@media (max-width: 1024px) {
+  .mainRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.leftCol, .rightCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-6);
+}
+
+.card {
+  background: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--spacing-6);
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-gray-200);
+}
+
+.cardTitle {
+  font-size: var(--font-lg);
+  margin-bottom: var(--spacing-6);
+  color: var(--color-gray-900);
+}
+
+/* Department Chart */
+.deptChart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.deptBarWrapper {
+  width: 100%;
+}
+
+.deptLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--font-sm);
+  color: var(--color-gray-700);
+  margin-bottom: var(--spacing-1);
+}
+
+.barContainer {
+  height: 8px;
+  background-color: var(--color-gray-100);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.5s ease-in-out;
+}
+
+/* Recent Activities */
+.activityList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-4);
+}
+
+.activityItem {
+  display: flex;
+  gap: var(--spacing-3);
+  position: relative;
+}
+
+.activityItem:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 15px;
+  bottom: -15px;
+  width: 2px;
+  background-color: var(--color-gray-200);
+}
+
+.activityDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  margin-top: 4px;
+  z-index: 1;
+}
+
+.activityContent p {
+  color: var(--color-gray-900);
+  font-size: var(--font-sm);
+  margin-bottom: 2px;
+}
+
+.activityContent span {
+  color: var(--color-gray-500);
+  font-size: var(--font-xs);
+}
+
+/* Quick Actions */
+.quickActions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.actionBtn {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+  width: 100%;
+  padding: var(--spacing-3);
+  background-color: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  color: var(--color-gray-700);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+}
+
+.actionBtn:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+/* Pending Leaves */
+.pendingLeavesCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.pendingCount {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--color-warning);
+  line-height: 1;
+  margin-bottom: var(--spacing-2);
+}
+
+.pendingLeavesCard p {
+  color: var(--color-gray-600);
+  font-size: var(--font-sm);
+}
+
+/* Upcoming Holidays */
+.holidayList {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
+}
+
+.holidayItem {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-4);
+  padding: var(--spacing-3);
+  background-color: var(--color-gray-50);
+  border-radius: var(--radius-md);
+  border-left: 4px solid var(--color-success);
+}
+
+.holidayDate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  box-shadow: var(--shadow-sm);
+  min-width: 45px;
+}
+
+.holidayDate span:first-child {
+  font-weight: 700;
+  color: var(--color-gray-900);
+  font-size: var(--font-lg);
+  line-height: 1;
+}
+
+.holidayDate span:last-child {
+  font-size: 10px;
+  color: var(--color-danger);
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.holidayName {
+  font-weight: 500;
+  color: var(--color-gray-800);
+}

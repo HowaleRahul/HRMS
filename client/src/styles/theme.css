@@ -1,0 +1,11 @@
+@import './variables.css';
+
+:root {
+  --theme-bg: #ffffff;
+  --theme-text: var(--color-gray-900);
+}
+
+[data-theme='dark'] {
+  --theme-bg: var(--color-gray-900);
+  --theme-text: var(--color-gray-50);
+}

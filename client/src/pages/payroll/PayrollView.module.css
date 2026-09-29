@@ -1,0 +1,177 @@
+.container {
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.backBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  color: #6b7280;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.backBtn:hover {
+  color: #111827;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btnSecondary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  color: #374151;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btnPrimary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.payslipCard {
+  background: white;
+  padding: 40px;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.payslipHeader {
+  text-align: center;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+}
+
+.payslipHeader h2 {
+  margin: 0 0 8px 0;
+  color: #111827;
+}
+
+.empDetails {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.detailGroup label {
+  font-size: 12px;
+  color: #6b7280;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.detailGroup p {
+  margin: 4px 0 0 0;
+  color: #111827;
+  font-weight: 500;
+}
+
+.tablesContainer {
+  display: flex;
+  gap: 32px;
+  margin-bottom: 32px;
+}
+
+.tableBlock {
+  flex: 1;
+}
+
+.tableBlock h3 {
+  font-size: 16px;
+  color: #374151;
+  margin-bottom: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 8px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table td {
+  padding: 12px 0;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+.table td:last-child {
+  text-align: right;
+  font-weight: 500;
+  color: #111827;
+}
+
+.totalRow td {
+  font-weight: 700;
+  color: #111827;
+  border-top: 2px solid #e5e7eb;
+  padding-top: 16px;
+}
+
+.netSalaryBlock {
+  text-align: center;
+  background: #f9fafb;
+  padding: 24px;
+  border-radius: 8px;
+  border: 1px dashed #d1d5db;
+}
+
+.netSalaryBlock h3 {
+  margin: 0;
+  font-size: 20px;
+  color: #374151;
+}
+
+.netSalaryBlock span {
+  color: #4f46e5;
+  font-size: 24px;
+}
+
+.netSalaryBlock p {
+  margin: 8px 0 0 0;
+  color: #6b7280;
+  font-style: italic;
+  font-size: 14px;
+}
+
+@media print {
+  .header, .sidebar {
+    display: none !important;
+  }
+  .container {
+    padding: 0;
+  }
+  .payslipCard {
+    border: none;
+  }
+}
